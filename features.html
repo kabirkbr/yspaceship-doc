@@ -223,8 +223,22 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="features">Features</h1>
+<p>This page documents in detail main features of the ySpaceShip available for the user via web interface. Note, that this section of documentation is compiled automagically from <a href="https://cucumber.io/" target="_blank">Cucumber BDD</a> tests (i.e. features / scenarios written in <a href="https://github.com/cucumber/cucumber/wiki/Gherkin" target="_blank">Gherkin</a>) -- therefore excuse it for strange bullet-point based style. Furthermore, features are &apos;documented&apos; as sequences of screenshots the user should see following these bullet points in sequence (thanks to <a href="http://www.seleniumhq.org/" target="_blank">Selenium</a>. The start of the sequence is marked by the little rocket. User interaction with the browser window (pressed buttons, etc.) are indecated by red rectangles.</p>
 <h2 id="application-management">Application management</h2>
+<p>The web interface is a window to the SpaceGraph -- the database where all publications and their annotations are stored. Application management feature allows to control what is loaded into space graph and some other options.</p>
+<h3 id="scenario-open-application-management-menu">Scenario: open application management menu</h3>
+<p>The management menu is acceptable through the gear icon at top right of the window. It opens a menu to a few dialogs -- the exact number may vary as more management functions are added.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user presses gear icon</p>
+</li>
+<li><p>Then : application management menu is opened</p>
+</li>
+</ul>
+<p><img src="images/open_application_management_menu.gif" alt=""></p>
 <h3 id="scenario-open-application-settings-dialog">Scenario: open application settings dialog</h3>
+<p>Application settings contain Zotero database configuration and pdf browser configuration</p>
 <ul>
 <li><p>Given : the &quot;management&quot; menu is open</p>
 </li>
@@ -235,6 +249,7 @@
 </ul>
 <p><img src="images/open_application_settings_dialog.gif" alt=""></p>
 <h3 id="scenario-open-control-room-dialog">Scenario: open control room dialog</h3>
+<p>Control room dialogue allows to synchronize SpaceGraph with Zotero database and extract pdf annotations from PDF files.</p>
 <ul>
 <li><p>Given : the &quot;management&quot; menu is open</p>
 </li>
@@ -244,23 +259,8 @@
 </li>
 </ul>
 <p><img src="images/open_control_room_dialog.gif" alt=""></p>
-<h3 id="scenario-toggle-filters-view">Scenario: toggle filters view</h3>
-<ul>
-<li><p>Given : the ySpaceShip is running</p>
-</li>
-<li><p>Then : &quot;library-navigation&quot; is displayed</p>
-</li>
-<li><p>When : user presses &quot;toggle-filters&quot; (eye) icon</p>
-</li>
-<li><p>Then : &quot;library-navigation&quot; is hidden</p>
-</li>
-<li><p>When : user presses &quot;toggle-filters&quot; (eye) icon</p>
-</li>
-<li><p>Then : &quot;library-navigation&quot; is displayed</p>
-</li>
-</ul>
-<p><img src="images/toggle_filters_view.gif" alt=""></p>
 <h3 id="scenario-display-help">Scenario: display help</h3>
+<p>User manual / help system is accessble via question-mark icon and opens as a separate web page.</p>
 <ul>
 <li><p>Given : the ySpaceShip is running</p>
 </li>
@@ -271,9 +271,9 @@
 </ul>
 <p><img src="images/display_help.gif" alt=""></p>
 <h2 id="application-settings">Application settings</h2>
-<p>Users should be able to set and save application settings needed for 
-it to run;</p>
+<p>Users can manually input various application settings which will then be saved to configuration files. This is normally needed only for the first run of ySpaceShip. Settings used are the special purpose test database for ySpaceShip. Normally users will input credentials of their own Zotero bibliography database.</p>
 <h3 id="scenario-outline-input-and-save-settings-with-defaults">Scenario Outline: Input and save settings with defaults</h3>
+<p>Input settings of Zotero database but leave PDF editor default.</p>
 <ul>
 <li><p>Given : &quot;application-settings&quot; dialogue is displayed</p>
 </li>
@@ -287,6 +287,36 @@ it to run;</p>
 </li>
 </ul>
 <p><img src="images/Input_and_save_settings_with_defaults.gif" alt=""></p>
+<h3 id="scenario-outline-input-and-save-all-settings">Scenario Outline: Input and save all settings</h3>
+<p>Change PDF editor for viewing files (normally needed because of different operating systems).</p>
+<ul>
+<li><p>Given : &quot;application-settings&quot; dialogue is displayed</p>
+</li>
+<li><p>When : user selects &quot;local_pdf_editor&quot; as &apos;PDF-XChange (Windows)&apos;</p>
+</li>
+<li><p>And : user presses &quot;save-application-settings&quot; button</p>
+</li>
+<li><p>Then : &quot;application-settings&quot; dialog closes</p>
+</li>
+<li><p>And : file &quot;pbrain.conf&quot; has &quot;local_pdf_editor&quot; value &apos;&apos;C:\Program Files\Tracker Software\PDF Viewer\PDFXCview.exe&apos;&apos;</p>
+</li>
+</ul>
+<p><img src="images/Input_and_save_all_settings.gif" alt=""></p>
+<h3 id="scenario-outline-input-and-save-all-settings">Scenario Outline: Input and save all settings</h3>
+<p>Change PDF editor for viewing files (normally needed because of different operating systems).</p>
+<ul>
+<li><p>Given : &quot;application-settings&quot; dialogue is displayed</p>
+</li>
+<li><p>When : user selects &quot;local_pdf_editor&quot; as &apos;Okular (Linux)&apos;</p>
+</li>
+<li><p>And : user presses &quot;save-application-settings&quot; button</p>
+</li>
+<li><p>Then : &quot;application-settings&quot; dialog closes</p>
+</li>
+<li><p>And : file &quot;pbrain.conf&quot; has &quot;local_pdf_editor&quot; value &apos;okular&apos;</p>
+</li>
+</ul>
+<p><img src="images/Input_and_save_all_settings.gif" alt=""></p>
 <h2 id="control-room">Control room</h2>
 <p>Users should be able to set and save application settings needed for 
 it to run;</p>
@@ -302,6 +332,128 @@ it to run;</p>
 </li>
 </ul>
 <p><img src="images/Clear_SpaceGraph_Database.gif" alt=""></p>
+<h3 id="scenario-synchronize-graph">Scenario: Synchronize graph</h3>
+<ul>
+<li><p>Given : &quot;control-room&quot; dialogue is displayed</p>
+</li>
+<li><p>Given : file <pbrain.conf> contains valid settings:</pbrain.conf></p>
+</li>
+<li><p>When : user presses &quot;synchronizeSpaceGraph&quot; button and waits for script to finish</p>
+</li>
+<li><p>Then : &quot;synchronizeSpaceGraph&quot; button text is &quot;Synchronized&quot;</p>
+</li>
+</ul>
+<p><img src="images/Synchronize_graph.gif" alt=""></p>
+<h2 id="filters-and-queries">Filters and queries</h2>
+<p>The main functionality of ySpaceShip is the ability to search and filter publications and annotations by their properties and -- most importantly -- by their full text.  A number of filter options exist in order to be able todisplay only the relevant content in the main info window.</p>
+<h3 id="scenario-toggle-filters-view">Scenario: toggle filters view</h3>
+<p>Filters view occupies the upper part of the window and is by default open. The view can be toggled closed or open again at wish -- e.g. if more space is needed for navigating through publications and annotations.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>Then : &quot;library-navigation&quot; is displayed</p>
+</li>
+<li><p>When : user presses &quot;toggle-filters&quot; (eye) icon</p>
+</li>
+<li><p>Then : &quot;library-navigation&quot; is hidden</p>
+</li>
+<li><p>When : user presses &quot;toggle-filters&quot; (eye) icon</p>
+</li>
+<li><p>Then : &quot;library-navigation&quot; is displayed</p>
+</li>
+</ul>
+<p><img src="images/toggle_filters_view.gif" alt=""></p>
+<h3 id="scenario-filters-enabled-mode">Scenario: &quot;Filters enabled&quot; mode</h3>
+<p>If filters are applied, user will see only a subset of annotations and publications. Therefore it is important to know at each moment if the filters have been applied and clear them in case full view of the database is needed.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user writes &quot;whatever&quot; to &quot;full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;filter-status&quot; with &quot;Filters enabled&quot; is displayed</p>
+</li>
+<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;filter-status&quot; with &quot;Filters enabled&quot; is NOT displayed</p>
+</li>
+</ul>
+<p><img src="images/&quot;Filters_enabled&quot;_mode.gif" alt=""></p>
+<h3 id="scenario-outline-full-text-query-returns-both-publication-and-annotation">Scenario Outline: Full text query returns both publication and annotation</h3>
+<p>Users can search publications and annotations with full text queries, regular expressions and logic constructions -- as enabled by <a href="https://www.elastic.co/products/elasticsearch" target="_blank">Elasticsearch</a> server. Simply put sentence in quotes in order to search for exact phrase.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user writes &apos;information overload&apos; to &quot;full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>Then : &quot;publications-table&quot; contains &quot;1&quot; row having &quot;title&quot; with &apos;information overload&apos;</p>
+</li>
+<li><p>And : user presses &quot;annotations-list-button&quot; button</p>
+</li>
+<li><p>Then : &quot;annotations-table&quot; contains &quot;1&quot; row having &quot;text&quot; with &apos;information overload&apos;</p>
+</li>
+<li><p>And : user presses &quot;sorted-annotations-list-button&quot; button</p>
+</li>
+<li><p>And : &quot;sorted-annotations-table&quot; contains &quot;2&quot; row having &quot;text&quot; with &apos;information overload&apos;</p>
+</li>
+<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Full_text_query_returns_both_publication_and_annotation.gif" alt=""></p>
+<h3 id="scenario-outline-filter-by-tag">Scenario Outline: Filter by tag</h3>
+<p>Users can filter publications by one or more tag which are listed at the top left corner of the window. Note that tags are combined with OR logical operators with other tags and filters -- so all publications which are taged with one or more of these tags are displayed.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;tag1&apos; in &quot;tags-list&quot;</p>
+</li>
+<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>Then : &quot;publications-table&quot; contains &apos;3&apos;</p>
+</li>
+<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Filter_by_tag.gif" alt=""></p>
+<h3 id="scenario-outline-filter-by-author">Scenario Outline: Filter by author</h3>
+<p>Users can filter publications by one or more tag which are listed at the top left corner of the window. Note that tags are combined with OR logical operators with other tags and filters -- so all publications which are taged with one or more of these tags are displayed.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;A. V., Kravtsov&apos; in &quot;authors-list&quot;</p>
+</li>
+<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>Then : &quot;publications-table&quot; contains &apos;1&apos;</p>
+</li>
+<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Filter_by_author.gif" alt=""></p>
+<h3 id="scenario-outline-filter-by-publication">Scenario Outline: Filter by publication</h3>
+<p>Sometimes it is needed to get all annotations of particular publication and simply browse them. If graph database is small (i.e. all annotations fit into the &apos;browser memory&apos;), this can be done simply by going to &apos;sorted annotations&apos; panel and finding the required publication there. Yet most of the time this is not possible and the filter on publication has to be applied first.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;A Computation in a Cellular Automaton Collider Rule 110&apos; in &quot;publications-table&quot;</p>
+</li>
+<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>And : user presses &quot;annotations-list-button&quot; button</p>
+</li>
+<li><p>Then : &quot;annotations-table&quot; contains &apos;1&apos;</p>
+</li>
+<li><p>And : user presses &quot;sorted-annotations-list-button&quot; button</p>
+</li>
+<li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;2&apos;</p>
+</li>
+<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Filter_by_publication.gif" alt=""></p>
 
                                 
                                 </section>
@@ -345,7 +497,7 @@ it to run;</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"output":"md_document","title":"Features","level":"1.3.1","depth":2,"next":{"title":"Releases","level":"1.4","depth":1,"path":"releases.md","ref":"releases.md","articles":[]},"previous":{"title":"Using","level":"1.3","depth":1,"path":"using.md","ref":"using.md","articles":[{"title":"Features","level":"1.3.1","depth":2,"path":"features.md","ref":"features.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["page-toc"],"pluginsConfig":{"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"features.md","mtime":"2016-12-27T22:35:36.798Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-12-27T22:35:41.861Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Features","level":"1.3.1","depth":2,"next":{"title":"Releases","level":"1.4","depth":1,"path":"releases.md","ref":"releases.md","articles":[]},"previous":{"title":"Using","level":"1.3","depth":1,"path":"using.md","ref":"using.md","articles":[{"title":"Features","level":"1.3.1","depth":2,"path":"features.md","ref":"features.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["page-toc"],"pluginsConfig":{"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"features.md","mtime":"2016-12-28T21:50:12.901Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-12-28T21:50:17.744Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
