@@ -298,7 +298,7 @@
 </li>
 <li><p>Then : &quot;application-settings&quot; dialog closes</p>
 </li>
-<li><p>And : file &quot;pbrain.conf&quot; has &quot;local_pdf_editor&quot; value &apos;&apos;C:\Program Files\Tracker Software\PDF Viewer\PDFXCview.exe&apos;&apos;</p>
+<li><p>And : file &quot;pbrain.conf&quot; has &quot;local_pdf_editor&quot; value &apos;C:\Program Files\Tracker Software\PDF Viewer\PDFXCview.exe&apos;</p>
 </li>
 </ul>
 <p><img src="images/Input_and_save_all_settings.gif" alt=""></p>
@@ -342,9 +342,11 @@ it to run;</p>
 </li>
 <li><p>Then : &quot;synchronizeSpaceGraph&quot; button text is &quot;Synchronized&quot;</p>
 </li>
+<li><p>And : user presses &quot;close-and-refresh&quot; button and waits for script to finish</p>
+</li>
 </ul>
 <p><img src="images/Synchronize_graph.gif" alt=""></p>
-<h2 id="filters-and-queries">Filters and queries</h2>
+<h2 id="publicatons-filters-and-queries">Publicatons filters and queries</h2>
 <p>The main functionality of ySpaceShip is the ability to search and filter publications and annotations by their properties and -- most importantly -- by their full text.  A number of filter options exist in order to be able todisplay only the relevant content in the main info window.</p>
 <h3 id="scenario-toggle-filters-view">Scenario: toggle filters view</h3>
 <p>Filters view occupies the upper part of the window and is by default open. The view can be toggled closed or open again at wish -- e.g. if more space is needed for navigating through publications and annotations.</p>
@@ -363,46 +365,59 @@ it to run;</p>
 </li>
 </ul>
 <p><img src="images/toggle_filters_view.gif" alt=""></p>
-<h3 id="scenario-filters-enabled-mode">Scenario: &quot;Filters enabled&quot; mode</h3>
-<p>If filters are applied, user will see only a subset of annotations and publications. Therefore it is important to know at each moment if the filters have been applied and clear them in case full view of the database is needed.</p>
+<h3 id="scenario-publication-filter-enabled-mode">Scenario: &quot;Publication filter enabled&quot; mode</h3>
+<p>If publication filters are applied, user will see only a subset all publications. Therefore it is important to know at each moment if publication filters are active. When publications filter is cleared, annotations filter is also cleared.</p>
 <ul>
 <li><p>Given : the ySpaceShip is running</p>
 </li>
-<li><p>When : user writes &quot;whatever&quot; to &quot;full-text-query&quot; input field</p>
+<li><p>When : user writes &quot;whatever&quot; to &quot;publications-full-text-query&quot; input field</p>
 </li>
-<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
 </li>
-<li><p>Then : &quot;filter-status&quot; with &quot;Filters enabled&quot; is displayed</p>
+<li><p>Then : &quot;publications-filter-status&quot; with &quot;Publications filter enabled&quot; is displayed</p>
 </li>
-<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
 </li>
-<li><p>Then : &quot;filter-status&quot; with &quot;Filters enabled&quot; is NOT displayed</p>
+<li><p>Then : &quot;publications-filter-status&quot; with &quot;Publications filter enabled&quot; is NOT displayed</p>
+</li>
+<li><p>Then : &quot;annotations-filter-status&quot; with &quot;Annotations filter enabled&quot; is NOT displayed</p>
 </li>
 </ul>
-<p><img src="images/&quot;Filters_enabled&quot;_mode.gif" alt=""></p>
-<h3 id="scenario-outline-full-text-query-returns-both-publication-and-annotation">Scenario Outline: Full text query returns both publication and annotation</h3>
-<p>Users can search publications and annotations with full text queries, regular expressions and logic constructions -- as enabled by <a href="https://www.elastic.co/products/elasticsearch" target="_blank">Elasticsearch</a> server. Simply put sentence in quotes in order to search for exact phrase.</p>
+<p><img src="images/&quot;Publication_filter_enabled&quot;_mode.gif" alt=""></p>
+<h3 id="scenario-annotations-filter-enabled-mode">Scenario: &quot;Annotations filter enabled&quot; mode</h3>
+<p>If annotations filter is applied, user will see only a subset all annotations available from the database. Therefore it is important to know at each moment if annotation filters are active. Note, that application filters can be applied hierarchically only for the publications selected by publications filter before. In that case, when annotation filters is  cleared, the publications filter still remains active as it should cleared separately.</p>
 <ul>
 <li><p>Given : the ySpaceShip is running</p>
 </li>
-<li><p>When : user writes &apos;information overload&apos; to &quot;full-text-query&quot; input field</p>
+<li><p>When : user writes &quot;whatever&quot; to &quot;annotations-full-text-query&quot; input field</p>
 </li>
-<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
 </li>
-<li><p>Then : &quot;publications-table&quot; contains &quot;1&quot; row having &quot;title&quot; with &apos;information overload&apos;</p>
+<li><p>Then : &quot;annotations-filter-status&quot; with &quot;Annotations filter enabled&quot; is displayed</p>
 </li>
-<li><p>And : user presses &quot;annotations-list-button&quot; button</p>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
 </li>
-<li><p>Then : &quot;annotations-table&quot; contains &quot;1&quot; row having &quot;text&quot; with &apos;information overload&apos;</p>
+<li><p>Then : &quot;annotations-filter-status&quot; with &quot;Annotations filter enabled&quot; is NOT displayed</p>
 </li>
-<li><p>And : user presses &quot;sorted-annotations-list-button&quot; button</p>
-</li>
-<li><p>And : &quot;sorted-annotations-table&quot; contains &quot;2&quot; row having &quot;text&quot; with &apos;information overload&apos;</p>
-</li>
-<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 </ul>
-<p><img src="images/Full_text_query_returns_both_publication_and_annotation.gif" alt=""></p>
+<p><img src="images/&quot;Annotations_filter_enabled&quot;_mode.gif" alt=""></p>
+<h3 id="scenario-outline-full-text-query-on-publications-titles-and-file-names">Scenario Outline: Full text query on publications&apos; titles and file names</h3>
+<p>Users can search titles of the publications and names of pdf files with full text queries, regular expressions and logic constructions -- as enabled by <a href="https://www.elastic.co/products/elasticsearch" target="_blank">Elasticsearch</a> server.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user writes &apos;information overload&apos; to &quot;publications-full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>Then : &quot;publications-table&quot; contains &apos;1&apos; rows of class &quot;clickable-row&quot;</p>
+</li>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Full_text_query_on_publications&apos;_titles_and_file_names.gif" alt=""></p>
 <h3 id="scenario-outline-filter-by-tag">Scenario Outline: Filter by tag</h3>
 <p>Users can filter publications by one or more tag which are listed at the top left corner of the window. Note that tags are combined with OR logical operators with other tags and filters -- so all publications which are taged with one or more of these tags are displayed.</p>
 <ul>
@@ -410,11 +425,11 @@ it to run;</p>
 </li>
 <li><p>When : user checks &apos;tag1&apos; in &quot;tags-list&quot;</p>
 </li>
-<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 <li><p>Then : &quot;publications-table&quot; contains &apos;3&apos;</p>
 </li>
-<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 </ul>
 <p><img src="images/Filter_by_tag.gif" alt=""></p>
@@ -423,37 +438,200 @@ it to run;</p>
 <ul>
 <li><p>Given : the ySpaceShip is running</p>
 </li>
-<li><p>When : user checks &apos;A. V., Kravtsov&apos; in &quot;authors-list&quot;</p>
+<li><p>When : user checks &apos;Kravtsov, A. V.&apos; in &quot;authors-list&quot;</p>
 </li>
-<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 <li><p>Then : &quot;publications-table&quot; contains &apos;1&apos;</p>
 </li>
-<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 </ul>
 <p><img src="images/Filter_by_author.gif" alt=""></p>
-<h3 id="scenario-outline-filter-by-publication">Scenario Outline: Filter by publication</h3>
-<p>Sometimes it is needed to get all annotations of particular publication and simply browse them. If graph database is small (i.e. all annotations fit into the &apos;browser memory&apos;), this can be done simply by going to &apos;sorted annotations&apos; panel and finding the required publication there. Yet most of the time this is not possible and the filter on publication has to be applied first.</p>
+<h3 id="scenario-outline-combining-tags-and-authors-in-one-query">Scenario Outline: Combining tags and authors in one query</h3>
+<p>It is possible to combine all above in one publication filter. The checkbox &apos;combine with OR&apos; allows to combine tags, authors and publication text either with a logical operator AND (when unchecked - default) or with OR (when checked).</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;Heylighen, Francis&apos; in &quot;authors-list&quot;</p>
+</li>
+<li><p>When : user checks &apos;tag1&apos; in &quot;tags-list&quot;</p>
+</li>
+<li><p>When : user selects &apos;AND&apos; operator</p>
+</li>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>Then : &quot;publications-table&quot; contains &apos;1&apos;</p>
+</li>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Combining_tags_and_authors_in_one_query.gif" alt=""></p>
+<h3 id="scenario-outline-combining-tags-and-authors-in-one-query">Scenario Outline: Combining tags and authors in one query</h3>
+<p>It is possible to combine all above in one publication filter. The checkbox &apos;combine with OR&apos; allows to combine tags, authors and publication text either with a logical operator AND (when unchecked - default) or with OR (when checked).</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;Heylighen, Francis&apos; in &quot;authors-list&quot;</p>
+</li>
+<li><p>When : user checks &apos;tag1&apos; in &quot;tags-list&quot;</p>
+</li>
+<li><p>When : user selects &apos;OR&apos; operator</p>
+</li>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>Then : &quot;publications-table&quot; contains &apos;3&apos;</p>
+</li>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Combining_tags_and_authors_in_one_query.gif" alt=""></p>
+<h3 id="scenario-outline-combining-tags-and-full-text-search-on-publication-title-in-one-filter">Scenario Outline: Combining tags and full text search on publication title in one filter</h3>
+<p>It is possible to combine all above in one publication filter. The checkbox &apos;combine with OR&apos; allows to combine tags, authors and publication text either with a logical operator AND (when unchecked - default) or with OR (when checked).</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;tag2&apos; in &quot;tags-list&quot;</p>
+</li>
+<li><p>When : user writes &apos;Gauss-Bonnet Type Identity&apos; to &quot;publications-full-text-query&quot; input field</p>
+</li>
+<li><p>When : user selects &apos;AND&apos; operator</p>
+</li>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>Then : &quot;publications-table&quot; contains &apos;1&apos;</p>
+</li>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Combining_tags_and_full_text_search_on_publication_title_in_one_filter.gif" alt=""></p>
+<h3 id="scenario-outline-combining-tags-and-full-text-search-on-publication-title-in-one-filter">Scenario Outline: Combining tags and full text search on publication title in one filter</h3>
+<p>It is possible to combine all above in one publication filter. The checkbox &apos;combine with OR&apos; allows to combine tags, authors and publication text either with a logical operator AND (when unchecked - default) or with OR (when checked).</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;tag2&apos; in &quot;tags-list&quot;</p>
+</li>
+<li><p>When : user writes &apos;Gauss-Bonnet Type Identity&apos; to &quot;publications-full-text-query&quot; input field</p>
+</li>
+<li><p>When : user selects &apos;OR&apos; operator</p>
+</li>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>Then : &quot;publications-table&quot; contains &apos;2&apos;</p>
+</li>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Combining_tags_and_full_text_search_on_publication_title_in_one_filter.gif" alt=""></p>
+<h2 id="annotation-filters">Annotation filters</h2>
+<h3 id="scenario-outline-get-all-annotations-of-selected-publication">Scenario Outline: Get all annotations of selected publication</h3>
+<p>Sometimes it is needed to get all annotations of particular publication and simply browse them. If the database is small (i.e. all annotations fit into the &apos;browser memory&apos;), this can be done simply by going to &apos;sorted annotations&apos; panel and finding the required publication there. Yet most of the time this is not possible and an annotations filter by publication has to be applied first.</p>
 <ul>
 <li><p>Given : the ySpaceShip is running</p>
 </li>
 <li><p>When : user checks &apos;A Computation in a Cellular Automaton Collider Rule 110&apos; in &quot;publications-table&quot;</p>
 </li>
-<li><p>And : user presses &quot;apply-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
-</li>
-<li><p>And : user presses &quot;annotations-list-button&quot; button</p>
-</li>
-<li><p>Then : &quot;annotations-table&quot; contains &apos;1&apos;</p>
-</li>
-<li><p>And : user presses &quot;sorted-annotations-list-button&quot; button</p>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 <li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;2&apos;</p>
 </li>
-<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 </ul>
-<p><img src="images/Filter_by_publication.gif" alt=""></p>
+<p><img src="images/Get_all_annotations_of_selected_publication.gif" alt=""></p>
+<h3 id="scenario-outline-full-text-query-on-highlights-and-comments-of-all-publications">Scenario Outline: Full text query on highlights and comments of all publications</h3>
+<p>Users can search highlights and comments together (default) or individually (by unchecking appropriate check-box below query field) of all publications in the database.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user writes &apos;information overload&apos; to &quot;annotations-full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;2&apos; rows of class &quot;clickable-row&quot;</p>
+</li>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Full_text_query_on_highlights_and_comments_of_all_publications.gif" alt=""></p>
+<h3 id="scenario-outline-full-text-query-on-highlights-and-comments-of-all-publications">Scenario Outline: Full text query on highlights and comments of all publications</h3>
+<p>Users can search highlights and comments together (default) or individually (by unchecking appropriate check-box below query field) of all publications in the database.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user writes &apos;information OR overload&apos; to &quot;annotations-full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;2&apos; rows of class &quot;clickable-row&quot;</p>
+</li>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Full_text_query_on_highlights_and_comments_of_all_publications.gif" alt=""></p>
+<h3 id="scenario-outline-full-text-query-on-highlights-and-comments-of-all-publications">Scenario Outline: Full text query on highlights and comments of all publications</h3>
+<p>Users can search highlights and comments together (default) or individually (by unchecking appropriate check-box below query field) of all publications in the database.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user writes &apos;&quot;information overload&quot;&apos; to &quot;annotations-full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;1&apos; rows of class &quot;clickable-row&quot;</p>
+</li>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Full_text_query_on_highlights_and_comments_of_all_publications.gif" alt=""></p>
+<h3 id="scenario-outline-full-text-query-on-highlights-and-comments-of-all-publications">Scenario Outline: Full text query on highlights and comments of all publications</h3>
+<p>Users can search highlights and comments together (default) or individually (by unchecking appropriate check-box below query field) of all publications in the database.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user writes &apos;information AND  overload&apos; to &quot;annotations-full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;1&apos; rows of class &quot;clickable-row&quot;</p>
+</li>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Full_text_query_on_highlights_and_comments_of_all_publications.gif" alt=""></p>
+<h3 id="scenario-outline-full-text-query-on-highlights-and-comments-of-all-publications">Scenario Outline: Full text query on highlights and comments of all publications</h3>
+<p>Users can search highlights and comments together (default) or individually (by unchecking appropriate check-box below query field) of all publications in the database.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user writes &apos;^.<em>\binformation overload\b.</em>$&apos; to &quot;annotations-full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;1&apos; rows of class &quot;clickable-row&quot;</p>
+</li>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Full_text_query_on_highlights_and_comments_of_all_publications.gif" alt=""></p>
+<h3 id="scenario-outline-full-text-query-on-highlights-and-comments-of-selected-publications">Scenario Outline: Full text query on highlights and comments of selected publications</h3>
+<p>Users can search highlights and comments together (default) or individually (by unchecking appropriate check-box below query field) only for the selected publications in the publication pane.</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;Complexity and Information Overload in Society: why increasing efficiency leads to decreasing control&apos; in &quot;publications-table&quot;</p>
+</li>
+<li><p>When : user writes &apos;information overload&apos; to &quot;annotations-full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;1&apos; rows of class &quot;clickable-row&quot;</p>
+</li>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/Full_text_query_on_highlights_and_comments_of_selected_publications.gif" alt=""></p>
 <h2 id="quick-filters">Quick filters</h2>
 <p>Quick filters are a way to do quick and dirty search on the contents that is already displayed (but may be not visible due to large table) on the screen. Quick filters do not query database, are not able to search in more than one field in the table and also are not capable of complex queries. Use search filters for the above tasks.</p>
 <h3 id="scenario-outline-quick-filter-on-publications-table">Scenario Outline: Quick filter on &apos;publications-table&apos;</h3>
@@ -466,24 +644,10 @@ it to run;</p>
 </li>
 <li><p>Then : &apos;publications-table&apos; contains &apos;1&apos; rows</p>
 </li>
-<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 </ul>
 <p><img src="images/Quick_filter_on_&apos;publications-table&apos;.gif" alt=""></p>
-<h3 id="scenario-outline-quick-filter-on-annotations-table">Scenario Outline: Quick filter on &apos;annotations-table&apos;</h3>
-<ul>
-<li><p>Given : the ySpaceShip is running</p>
-</li>
-<li><p>When : user presses &apos;annotations-list-button&apos; button</p>
-</li>
-<li><p>When : user writes &apos;Information overload is made worse&apos; to &apos;filter-annotations&apos; input field</p>
-</li>
-<li><p>Then : &apos;annotations-table&apos; contains &apos;1&apos; rows</p>
-</li>
-<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
-</li>
-</ul>
-<p><img src="images/Quick_filter_on_&apos;annotations-table&apos;.gif" alt=""></p>
 <h3 id="scenario-outline-quick-filter-on-sorted-annotations-table">Scenario Outline: Quick filter on &apos;sorted-annotations-table&apos;</h3>
 <ul>
 <li><p>Given : the ySpaceShip is running</p>
@@ -494,10 +658,33 @@ it to run;</p>
 </li>
 <li><p>Then : &apos;sorted-annotations-table&apos; contains &apos;2&apos; rows</p>
 </li>
-<li><p>Then : user presses &quot;clear-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+<li><p>Then : user presses &quot;clear-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
 </li>
 </ul>
 <p><img src="images/Quick_filter_on_&apos;sorted-annotations-table&apos;.gif" alt=""></p>
+<h2 id="specific-scenarios">Specific scenarios</h2>
+<p>This feature documents specific scenarios of ySpaceShip usage.</p>
+<h3 id="scenario-outline-using-hierarchical-filters-sequentially">Scenario Outline: using hierarchical filters sequentially</h3>
+<p>Often user wants to find annotations with specific keywords or phrases only in certain publications or publications by specific author. The way to achieve this in ySpaceShip is to use</p>
+<ul>
+<li><p>Given : the ySpaceShip is running</p>
+</li>
+<li><p>When : user checks &apos;Babourova, O. V.&apos; in &quot;authors-list&quot;</p>
+</li>
+<li><p>And : user presses &quot;apply-publications-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+<li><p>When : user checks &apos;Gauss-Bonnet Type Identity in Weyl-Cartan Space&apos; in &quot;publications-table&quot;</p>
+</li>
+<li><p>When : user writes &apos;comment&apos; to &quot;annotations-full-text-query&quot; input field</p>
+</li>
+<li><p>And : user presses &quot;apply-annotations-filters&quot; button and waits for no more than &quot;2&quot; seconds</p>
+</li>
+<li><p>Then : &quot;sorted-annotations-table&quot; contains &apos;2&apos; rows of class &quot;clickable-row&quot;</p>
+</li>
+<li><p>Then : user presses &quot;clear-annotations-filters&quot; button and waits for no more than &quot;1&quot; seconds</p>
+</li>
+</ul>
+<p><img src="images/using_hierarchical_filters_sequentially.gif" alt=""></p>
 
                                 
                                 </section>
@@ -541,7 +728,7 @@ it to run;</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Features","level":"1.3.1","depth":2,"next":{"title":"Releases","level":"1.4","depth":1,"path":"releases.md","ref":"releases.md","articles":[]},"previous":{"title":"Using","level":"1.3","depth":1,"path":"using.md","ref":"using.md","articles":[{"title":"Features","level":"1.3.1","depth":2,"path":"features.md","ref":"features.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["page-toc"],"pluginsConfig":{"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"features.md","mtime":"2017-01-04T19:13:41.405Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-01-04T19:13:46.304Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Features","level":"1.3.1","depth":2,"next":{"title":"Releases","level":"1.4","depth":1,"path":"releases.md","ref":"releases.md","articles":[]},"previous":{"title":"Using","level":"1.3","depth":1,"path":"using.md","ref":"using.md","articles":[{"title":"Features","level":"1.3.1","depth":2,"path":"features.md","ref":"features.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["page-toc"],"pluginsConfig":{"page-toc":{"position":"before-first","selector":".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"features.md","mtime":"2017-01-30T23:22:39.788Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-01-30T23:22:44.581Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
